@@ -46,6 +46,6 @@ def calculate_historical_volatility(stock_data, window=252) -> float:
     - window (int): The window size for calculating the historical volatility.
     Returns: volatility (float): The historical volatility of the stock.
     '''
-    log_returns = np.log(stock_data['Close'] / stock_data['Close'].shift(1))
+    log_returns = np.log(stock_data['Close'] / stock_data['Close'].shift(1)).dropna()
     volatility = np.sqrt(window) * log_returns.std()
     return volatility
