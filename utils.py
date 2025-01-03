@@ -10,7 +10,7 @@ def fetch_stock_data(ticker_symbol: str):
     stock_data = yf.download(ticker_symbol, period='1y', interval='1d')
     return stock_data
 
-def fetch_options_data(ticker_symbol: str):
+def fetch_options_data(ticker_symbol: str, expiry_date: int = 5) -> tuple:
     '''
     Fetches options data for a given ticker symbol.
     Args:   ticker_symbol (str): The ticker symbol of the stock.
@@ -18,8 +18,8 @@ def fetch_options_data(ticker_symbol: str):
     '''
     ticker = yf.Ticker(ticker_symbol)
     options_dates = ticker.options
-    options_data = ticker.option_chain(options_dates[5])  # Closest expiry date [Expand to include more]
-    return options_dates[5], options_data.calls, options_data.puts
+    options_data = ticker.option_chain(options_dates[expiry_date])  # Closest expiry date [Expand to include more]
+    return options_dates[expiry_date], options_data.calls, options_data.puts
 
 def fetch_risk_free_rate():
     '''
